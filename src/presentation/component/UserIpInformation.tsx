@@ -7,6 +7,7 @@ interface UserIpInformationProps {
 }
 
 export const UserIpInformation: React.FC<UserIpInformationProps> = (props) => {
+    console.log("UserIpInformation rendering");
     return (
         <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
             <Box p="6">
