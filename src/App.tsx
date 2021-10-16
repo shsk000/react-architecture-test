@@ -3,9 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 
 import { ChakraProvider } from '@chakra-ui/react';
-import { UserIpInformation } from './presentation/component/UserIpInformation';
+import { UserInformationContainer } from "./container/UserInformationContainer";
 
 function App() {
+  console.log("App rendering");
+
   return (
     <ChakraProvider>
       <div className="App">
@@ -23,7 +25,7 @@ function App() {
             Learn React
           </a>
 
-          <UserIpInformation />
+          <UserInformationContainer />
         </header>
       </div>
     </ChakraProvider>

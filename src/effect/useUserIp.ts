@@ -12,35 +12,35 @@ interface UseIpInformationOutput {
 // Main Process側の型定義に依存することなく、effect側でinvokeElectronを実行後取得できる型定義を定義すること
 type IpInformation = {
     ip: string;
-    country: string;
 };
 
+type ApiResponse = {
+    origin: string;
+}
+
 const initialIpInformation: IpInformation = {
-    country: "japan",
-    ip: "1.1.1.1"
+    ip: ""
 };
 
 export const useIpInformation = (): UseIpInformationOutput => {
     const [ipInformation, setIpInformation] = useState<IpInformation>(initialIpInformation);
 
-    const getIpInformation = useCallback( async () => {
-        const ipInformation = await ((): Promise<IpInformation> => {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve({
-                        country: "USA",
-                        ip: "2.2.2.2",
-                    });
-                }, 500);
-            });
-        })();
+    console.log("useIpInformation rendering", JSON.stringify(ipInformation));
 
-        setIpInformation(ipInformation);
+    const getIpInformation = useCallback(async () => {
+        const response = await fetch("http://httpbin.org/get");
+        const responseBody = (await response.json()) as ApiResponse;
+
+        console.log("execute to get ip information", responseBody);
+
+        setIpInformation({
+            ip: responseBody.origin
+        });
     }, []);
 
     useEffect(() => {
         getIpInformation();
-    }, []);
+    }, [getIpInformation]);
 
     return {
         state: {
